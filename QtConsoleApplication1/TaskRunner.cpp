@@ -11,8 +11,15 @@ void TaskRunner::slotProcessResult()
 
 void TaskRunner::runTasks()
 {
-    Matrix matrA(2, 3, { 1,1,1,1,1,1});
-    Matrix matrB(3, 2, { 2,2,2,2,2,2 });
+    //Matrix matrA(2, 3, { 1,1,1,1,1,1});
+    //Matrix matrB(3, 2, { 2,2,2,2,2,2 });
+
+    Matrix matrA(3, 3, { 12,34,51,
+                        44,98,55,
+                        22,11,87 });
+    Matrix matrB(3, 3, { 32,56,55,
+                        82,67,99,
+                        55,33,22});
 
     TaskMaker taskMaker;
     if (!taskMaker.makeTasks(matrA, matrB))
