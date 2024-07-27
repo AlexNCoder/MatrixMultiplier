@@ -1,5 +1,4 @@
 #include "Task.h"
-#include <QThread>
 
 Task::Task(
 	int rowCid, int colCid,
@@ -24,8 +23,7 @@ void Task::run()
 	{
 		sum += m_fromA.at(i) * m_fromB.at(i);
 	}
-
+	
 	m_matrC.m_vals[m_RowCid * m_matrC.colsCnt() + m_ColCid] = sum;
-	QThread::sleep(10);
 	//emit result(sum);
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include "Matrix/Matrix.h"
 
 class TaskRunner : public QObject
 {
@@ -7,6 +8,8 @@ class TaskRunner : public QObject
 
 public:
 	void runTasks();
+
+	void write2file(Matrix& matrA, std::ofstream& out);
 
 public slots:
 	void slotProcessResult();
