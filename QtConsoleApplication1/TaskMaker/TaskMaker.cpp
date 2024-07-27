@@ -1,29 +1,33 @@
 #include "TaskMaker.h"
 
+TaskMaker::TaskMaker()
+{
+}
+
 bool TaskMaker::makeTasks(Matrix matrA, Matrix matrB)
 {
     if (!canMultiply(matrA, matrB))
     {
         return false;
     }
-    Matrix matrC(matrA.colsCnt(), matrB.rowsCnt());
+    m_matrC.reset(new Matrix(matrA.rowsCnt(), matrB.colsCnt()));
 
-    if (!matrC.isValid())
+    if (!m_matrC->isValid())
     {
         return false;
     }
 
-    auto rowsC = matrC.rowsCnt();
-    auto colsC = matrC.colsCnt();
+    auto rowsC = m_matrC->rowsCnt();
+    auto colsC = m_matrC->colsCnt();
 
     for (int i = 0; i < rowsC; ++i)
     {
         for (int j = 0; j < colsC; ++j)
         {
-            auto task = new Task(i, j, matrA.getRow(i), matrA.getCol(j));
-            connect(task, &Task::result,
+            auto task = new Task(i, j, matrA.getRow(i), matrB.getCol(j), *m_matrC.get());
+            /*connect(task, &Task::result,
                 this, &TaskMaker::slotProcessResult,
-                Qt::DirectConnection);
+                Qt::DirectConnection);*/
             addTask(task);
         }
     }
@@ -34,9 +38,14 @@ std::vector<Task*> TaskMaker::tasks()
     return m_tasks;
 }
 
-void TaskMaker::slotProcessResult(Task *task)
+Matrix &TaskMaker::matrC()
 {
-    qDebug() << "Result";
+    return *m_matrC;
+}
+
+void TaskMaker::slotProcessResult(double res)
+{
+    qDebug() << "Result:    " << res;
 }
 
 void TaskMaker::addTask(Task *task)

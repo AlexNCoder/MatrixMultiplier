@@ -1,25 +1,33 @@
 #pragma once
 #include <QDebug>
-#include <QThreadPool>
-#include <memory>
+#include <QRunnaBle>
+//#include <memory>
+#include "../../Matrix/Matrix.h"
+
 class Task;
-typedef std::shared_ptr<Task> TaskP;
+//typedef std::shared_ptr<Task> TaskP;
 class Task : public QObject, public QRunnable
 {
 	Q_OBJECT
 
 public:
 	explicit Task(
-		int numRow, int numCol,
+		int numRowC, int numColC,
 		std::vector<double> fromA, std::vector<double> fromB,
+		Matrix &matrC,
 		QObject* parent = nullptr);
 	void run() override;
 
 signals:
-	void result(Task*);
+	void result(double);
 
 protected:
-	int m_numRow = 0;
-	int m_numCol = 0;
+	int m_RowCid = 0;
+	int m_ColCid = 0;
+
+	std::vector<double> m_fromA;
+	std::vector<double> m_fromB;
+
+	Matrix &m_matrC;
 };
 

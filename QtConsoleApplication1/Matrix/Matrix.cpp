@@ -78,6 +78,12 @@ std::vector<double> Matrix::getCol(int col)
 	return std::vector<double>();
 }
 
+std::vector<double>& Matrix::getData()
+{
+	// TODO: вставьте здесь оператор return
+	return m_vals;
+}
+
 bool Matrix::isValidShape()
 {
 	return m_rows > 0 && m_cols > 0;

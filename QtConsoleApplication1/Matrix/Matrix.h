@@ -3,6 +3,7 @@
 
 class Matrix
 {
+	friend class Task;
 public:
 	explicit Matrix(int rows, int cols, std::vector<double> &&vals = {});
 	bool isValid();
@@ -10,6 +11,7 @@ public:
 	int rowsCnt();
 	std::vector<double> getRow(int row);
 	std::vector<double> getCol(int col);
+	std::vector<double> &getData();
 
 private:
 	bool isValidShape();

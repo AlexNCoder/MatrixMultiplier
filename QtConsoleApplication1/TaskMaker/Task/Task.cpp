@@ -1,19 +1,28 @@
 #include "Task.h"
 
 Task::Task(
-	int numRow, int numCol,
+	int rowCid, int colCid,
 	std::vector<double> fromA,
 	std::vector<double> fromB,
+	Matrix &matrC,
 	QObject* parent)
-	:QObject(parent)
+	:QObject(parent),
+	m_RowCid(rowCid),
+	m_ColCid(colCid),
+	m_matrC(matrC)
 {
 }
 
 void Task::run()
 {
-	static int cnt = 0;
-	++cnt;
-	qDebug() << "Hi from file cpp!" << cnt;
+	double sum = 0;
 
-	emit result(this);
+	for (int i = 0; i < m_fromA.size(); ++i)
+	{
+		sum += m_fromA.at(i) * m_fromB.at(i);
+	}
+
+	m_matrC.m_vals[m_RowCid * m_fromA.size() + m_ColCid] = sum;
+
+	//emit result(sum);
 }
