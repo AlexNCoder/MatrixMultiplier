@@ -14,4 +14,6 @@ void Task::run()
 	static int cnt = 0;
 	++cnt;
 	qDebug() << "Hi from file cpp!" << cnt;
+
+	emit result(this);
 }

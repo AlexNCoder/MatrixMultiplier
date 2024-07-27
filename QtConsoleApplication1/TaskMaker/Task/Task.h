@@ -2,7 +2,8 @@
 #include <QDebug>
 #include <QThreadPool>
 #include <memory>
-
+class Task;
+typedef std::shared_ptr<Task> TaskP;
 class Task : public QObject, public QRunnable
 {
 	Q_OBJECT
@@ -15,10 +16,10 @@ public:
 	void run() override;
 
 signals:
-	void result(QString);
+	void result(Task*);
+
 protected:
 	int m_numRow = 0;
 	int m_numCol = 0;
 };
 
-typedef std::shared_ptr<Task> TaskP;

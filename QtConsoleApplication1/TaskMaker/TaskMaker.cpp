@@ -21,12 +21,25 @@ bool TaskMaker::makeTasks(Matrix matrA, Matrix matrB)
         for (int j = 0; j < colsC; ++j)
         {
             auto task = new Task(i, j, matrA.getRow(i), matrA.getCol(j));
-            addTask(TaskP(task));
+            connect(task, &Task::result,
+                this, &TaskMaker::slotProcessResult,
+                Qt::DirectConnection);
+            addTask(task);
         }
     }
 }
 
-void TaskMaker::addTask(TaskP task)
+std::vector<Task*> TaskMaker::tasks()
+{
+    return m_tasks;
+}
+
+void TaskMaker::slotProcessResult(Task *task)
+{
+    qDebug() << "Result";
+}
+
+void TaskMaker::addTask(Task *task)
 {
 	m_tasks.push_back(task);
 }

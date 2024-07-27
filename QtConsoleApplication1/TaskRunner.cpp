@@ -19,11 +19,13 @@ void TaskRunner::runTasks()
         return;
     }
 
+    auto tasks = taskMaker.tasks();
 
-
-    
-
-
-
-    //QThreadPool::globalInstance()->start(task);
+    for (auto task : tasks)
+    {
+        static int started;
+        task->setAutoDelete(false);
+        QThreadPool::globalInstance()->start(task);
+        qDebug() << "started:   " << started++;
+    }
 }
