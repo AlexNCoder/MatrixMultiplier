@@ -1,4 +1,5 @@
 #include "Task.h"
+#include <QThread>
 
 Task::Task(
 	int rowCid, int colCid,
@@ -7,6 +8,8 @@ Task::Task(
 	Matrix &matrC,
 	QObject* parent)
 	:QObject(parent),
+	m_fromA(fromA),
+	m_fromB(fromB),
 	m_RowCid(rowCid),
 	m_ColCid(colCid),
 	m_matrC(matrC)
@@ -22,7 +25,7 @@ void Task::run()
 		sum += m_fromA.at(i) * m_fromB.at(i);
 	}
 
-	m_matrC.m_vals[m_RowCid * m_fromA.size() + m_ColCid] = sum;
-
+	m_matrC.m_vals[m_RowCid * m_matrC.colsCnt() + m_ColCid] = sum;
+	QThread::sleep(10);
 	//emit result(sum);
 }
